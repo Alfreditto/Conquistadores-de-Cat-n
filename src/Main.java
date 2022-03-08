@@ -35,17 +35,27 @@ public class Main {
     private static void aumentarRecursos(Recurso[][] tablero, int dado, Jugador persona, Jugador maquina, int i, int j) {
         if (tablero[i][j].valor == dado) {
             if (tablero[i][j].getDueño().getType() == Jugador.Type.Persona) {
-                switch (tablero[i][j].getTipo()) {
-                    case trigo -> persona.aumentarRecurso(1);
-                    case carbon -> persona.aumentarRecurso(2);
-                    case madera -> persona.aumentarRecurso(3);
-                }
+                System.out.print("El jugador ha conseguido 1 de ");
+                asignarRecursos(tablero, persona, i, j);
             } else {
-                switch (tablero[i][j].getTipo()) {
-                    case trigo -> maquina.aumentarRecurso(1);
-                    case carbon -> maquina.aumentarRecurso(2);
-                    case madera -> maquina.aumentarRecurso(3);
-                }
+                asignarRecursos(tablero, maquina, i, j);
+            }
+        }
+    }
+
+    private static void asignarRecursos(Recurso[][] tablero, Jugador jugador, int i, int j) {
+        switch (tablero[i][j].getTipo()) {
+            case trigo -> {
+                System.out.println("trigo");
+                jugador.aumentarRecurso(1);
+            }
+            case carbon -> {
+                System.out.println("carbon");
+                jugador.aumentarRecurso(2);
+            }
+            case madera -> {
+                System.out.println("madera");
+                jugador.aumentarRecurso(3);
             }
         }
     }
