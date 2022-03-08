@@ -27,20 +27,24 @@ public class Main {
     private static void revisarCasilla(Recurso[][] tablero, int dado, Jugador persona, Jugador maquina) {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
-                if (tablero[i][j].valor == dado) {
-                    if (tablero[i][j].getDueño().getType() == Jugador.Type.Persona) {
-                        switch (tablero[i][j].getTipo()) {
-                            case trigo -> persona.aumentarRecurso(1);
-                            case carbon -> persona.aumentarRecurso(2);
-                            case madera -> persona.aumentarRecurso(3);
-                        }
-                    } else {
-                        switch (tablero[i][j].getTipo()) {
-                            case trigo -> maquina.aumentarRecurso(1);
-                            case carbon -> maquina.aumentarRecurso(2);
-                            case madera -> maquina.aumentarRecurso(3);
-                        }
-                    }
+                aumentarRecursos(tablero, dado, persona, maquina, i, j);
+            }
+        }
+    }
+
+    private static void aumentarRecursos(Recurso[][] tablero, int dado, Jugador persona, Jugador maquina, int i, int j) {
+        if (tablero[i][j].valor == dado) {
+            if (tablero[i][j].getDueño().getType() == Jugador.Type.Persona) {
+                switch (tablero[i][j].getTipo()) {
+                    case trigo -> persona.aumentarRecurso(1);
+                    case carbon -> persona.aumentarRecurso(2);
+                    case madera -> persona.aumentarRecurso(3);
+                }
+            } else {
+                switch (tablero[i][j].getTipo()) {
+                    case trigo -> maquina.aumentarRecurso(1);
+                    case carbon -> maquina.aumentarRecurso(2);
+                    case madera -> maquina.aumentarRecurso(3);
                 }
             }
         }
