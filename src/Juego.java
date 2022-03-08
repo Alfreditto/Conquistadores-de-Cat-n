@@ -18,7 +18,6 @@ public class Juego {
         asignarCasillas(tablero, Persona, Maquina);
         jugar(tablero, Persona, Maquina);
 
-
     }
 
     private void jugar(Recurso[][] tablero, Jugador persona, Jugador maquina) {
