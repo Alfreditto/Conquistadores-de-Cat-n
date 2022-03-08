@@ -1,10 +1,10 @@
 public class Jugador {
     enum Type {Persona, Maquina}
-    Type type;
-    int almacenM;
-    int almacenC;
-    int almacenT;
-    int recursos_totales;
+    private Type type;
+    private int almacenM;
+    private int almacenC;
+    private int almacenT;
+    private int recursos_totales;
 
     public int getAlmacenC() {
         return almacenC;
@@ -30,6 +30,7 @@ public class Jugador {
     }
 
     public int getRecursos_totales() {
+        contarMateriales();
         return recursos_totales;
     }
 
@@ -46,7 +47,7 @@ public class Jugador {
     }
 
     public Jugador(boolean esJugador) {
-        asignartipo(true);
+        asignartipo(esJugador);
     }
     public void aumentarRecurso(int aux){
         switch (aux) {
@@ -66,8 +67,7 @@ public class Jugador {
         }
     }
 
-    @Override
-    public String toString() {
+    public String mostrarInfo() {
         return "Jugador{" +
                 "type=" + type +
                 '}';

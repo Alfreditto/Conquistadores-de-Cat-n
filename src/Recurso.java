@@ -51,8 +51,7 @@ public class Recurso {
         }
     }
 
-    @Override
-    public String toString() {
+    public String mostrarInfo() {
         return "Recurso{" +
                 "tipo=" + tipo +
                 ", dueño=" + dueño +
