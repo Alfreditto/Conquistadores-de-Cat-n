@@ -45,8 +45,8 @@ public class Jugador {
         this.type = type;
     }
 
-    public Jugador(int aux) {
-        asignartipo(aux);
+    public Jugador(boolean esJugador) {
+        asignartipo(true);
     }
     public void aumentarRecurso(int aux){
         switch (aux) {
@@ -58,8 +58,8 @@ public class Jugador {
     public void contarMateriales(){
         setRecursos_totales((almacenM + almacenC + almacenT));
     }
-    public void asignartipo(int aux) {
-        if (aux == 1) {
+    public void asignartipo(boolean esJugador) {
+        if (esJugador) {
             setType(Type.Persona);
         } else {
             setType(Type.Maquina);
