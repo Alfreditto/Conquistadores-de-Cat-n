@@ -1,3 +1,5 @@
+import java.lang.*;
+
 public class Recurso {
     enum Type {trigo, madera, carbon}
     Type tipo;
@@ -35,22 +37,21 @@ public class Recurso {
     }
 
     private void asignarValor() {
-        int aux = (int) (Math.random() * 6) + 1;
-        setValor(aux);
+        int valor = (int) (Math.random() * 6) + 1;
+        setValor(valor);
     }
 
     //Se le asigna el tipo del recurso de forma aleatoria
     public void asignarTipo() {
-        int aux = (int) (Math.random() * 3);
-        switch (aux) {
+        int tipo = (int) (Math.random() * 3);
+        switch (tipo) {
             case 0 -> setTipo(Type.carbon);
             case 1 -> setTipo(Type.madera);
             case 2 -> setTipo(Type.trigo);
         }
     }
 
-    @Override
-    public String toString() {
+    public String mostrarInfo() {
         return "Recurso{" +
                 "tipo=" + tipo +
                 ", dueño=" + dueño +
