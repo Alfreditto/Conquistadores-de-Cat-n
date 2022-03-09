@@ -27,7 +27,7 @@ public class Juego {
         int recursosMaquina;
         int recursosJugador;
         do {
-            recolectarRecursos(tablero);
+            recolectarRecursos(tablero, persona, maquina);
             recursosMaquina = maquina.getRecursos_totales();
             recursosJugador = persona.getRecursos_totales();
         } while (recursosMaquina < 60 || recursosJugador < 60);
@@ -36,23 +36,38 @@ public class Juego {
         System.out.println(ganador);
     }
 
-    private void recolectarRecursos(Recurso[][] tablero) {
+    private void recolectarRecursos(Recurso[][] tablero, Jugador persona, Jugador maquina) {
+        System.out.println("Pulsa cualquier tecla");
+        String aux = sc.nextLine();
         int dado = (int) (Math.random() * 6) + 1;
-        revisarCasilla(tablero, dado);
+        System.out.println("Ha salido " + dado);
+        revisarCasilla(tablero, dado, persona, maquina);
     }
 
-    private void revisarCasilla(Recurso[][] tablero, int dado) {
+    private void revisarCasilla(Recurso[][] tablero, int dado, Jugador persona, Jugador maquina) {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
                 if (tablero[i][j].valor == dado) {
                     switch (tablero[i][j].getTipo()) {
-                        case trigo -> jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(1);
-                        case carbon -> jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(2);
-                        case madera -> jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(3);
+                        case trigo -> {
+                            jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(1);
+                            System.out.println("Se le ha dado 1 de trigo a " + tablero[i][j].getDueño().mostrarInfo());
+                        }
+                        case carbon -> {
+                            jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(2);
+                            System.out.println("Se le ha dado 1 de carbon a " + tablero[i][j].getDueño().mostrarInfo());
+                        }
+                        case madera -> {
+                            jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(3);
+                            System.out.println("Se le ha dado 1 de madera a " + tablero[i][j].getDueño().mostrarInfo());
+                        }
+                        default -> System.out.println("No hay ninguna casilla con el numero " + dado);
                     }
                 }
             }
         }
+        persona.pintarInventario();
+        maquina.pintarInventario();
     }
 
     //Vamos a asignar las casillas

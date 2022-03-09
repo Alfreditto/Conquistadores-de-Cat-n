@@ -66,6 +66,9 @@ public class Jugador {
             setType(Type.Maquina);
         }
     }
+    public void pintarInventario(){
+        System.out.println(mostrarInfo() + " M: " + almacenM + " C " + almacenC + " T " + almacenT);
+    }
 
     public String mostrarInfo() {
         return String.valueOf(this.type);
