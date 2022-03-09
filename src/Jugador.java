@@ -68,8 +68,6 @@ public class Jugador {
     }
 
     public String mostrarInfo() {
-        return "Jugador{" +
-                "type=" + type +
-                '}';
+        return String.valueOf(this.type);
     }
 }
