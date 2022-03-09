@@ -18,6 +18,7 @@ public class Juego {
 
         crearTablero(tablero);
         asignarCasillas(tablero, Persona, Maquina);
+        sc.nextLine();
         jugar(tablero, Persona, Maquina);
 
 
@@ -30,7 +31,7 @@ public class Juego {
             recolectarRecursos(tablero, persona, maquina);
             recursosMaquina = maquina.getRecursos_totales();
             recursosJugador = persona.getRecursos_totales();
-        } while (recursosMaquina < 60 || recursosJugador < 60);
+        } while (recursosMaquina < 60 && recursosJugador < 60);
 
         String ganador = recursosMaquina > recursosJugador ? "Ha ganado la maquina" : "Ha ganado el jugador";
         System.out.println(ganador);
