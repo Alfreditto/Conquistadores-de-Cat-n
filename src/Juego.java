@@ -100,11 +100,18 @@ public class Juego {
         String stringFormat = String.format("Indica que casilla quieres, el tablero son %s filas por %s columnas", tablero.length, tablero[0].length);
         System.out.println(stringFormat);
         boolean seleccionando = true;
+        int fila = 0;
+        int columna = 0;
         do {
-            System.out.println("Fila");
-            int fila = sc.nextInt() - 1;
-            System.out.println("Columna");
-            int columna = sc.nextInt() - 1;
+            do {
+                if (fila > 3 && columna > 4) {
+                    System.out.println("Numero no valido");
+                }
+                System.out.println("Fila");
+                fila = sc.nextInt() - 1;
+                System.out.println("Columna");
+                columna = sc.nextInt() - 1;
+            } while (fila < 3 && columna < 4);
             if (comprobar(tablero, fila, columna)) {
                 tablero[fila][columna].setDueño(persona);
                 seleccionando = !seleccionando;
