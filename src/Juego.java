@@ -102,15 +102,10 @@ public class Juego {
         int fila = 0;
         int columna = 0;
         do {
-            do {
-                if (fila > 3 && columna > 4) {
-                    System.out.println("Numero no valido");
-                }
-                System.out.println("Fila");
-                fila = sc.nextInt() - 1;
-                System.out.println("Columna");
-                columna = sc.nextInt() - 1;
-            } while (fila < 3 && columna < 4);
+            System.out.println("Fila");
+            fila = sc.nextInt() - 1;
+            System.out.println("Columna");
+            columna = sc.nextInt() - 1;
             if (comprobar(tablero, fila, columna)) {
                 tablero[fila][columna].setDueño(persona);
                 seleccionando = !seleccionando;
@@ -128,7 +123,7 @@ public class Juego {
     private void pintarTablero(Recurso[][] tablero) {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
-                System.out.println(tablero[i][j].mostrarInfo());
+                System.out.printf("%-20s", tablero[i][j].mostrarInfo());
             }
             System.out.print("\n");
         }
