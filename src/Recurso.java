@@ -52,9 +52,10 @@ public class Recurso {
     }
 
     public String mostrarInfo() {
+        String jugador = dueño == null ? null : dueño.mostrarInfo();
         return "Recurso{" +
                 "tipo=" + tipo +
-                ", dueño=" + dueño +
+                ", dueño=" + jugador +
                 ", valor=" + valor +
                 '}';
     }
