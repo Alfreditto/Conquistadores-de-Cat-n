@@ -1,10 +1,13 @@
 public class Jugador {
-    enum Type {Persona, Maquina}
     private Type type;
     private int almacenM;
     private int almacenC;
     private int almacenT;
     private int recursos_totales;
+
+    public Jugador(boolean esJugador) {
+        asignartipo(esJugador);
+    }
 
     public int getAlmacenC() {
         return almacenC;
@@ -21,6 +24,7 @@ public class Jugador {
     public void setAlmacenT(int almacenT) {
         this.almacenT = almacenT;
     }
+
     public int getAlmacenM() {
         return almacenM;
     }
@@ -46,19 +50,36 @@ public class Jugador {
         this.type = type;
     }
 
-    public Jugador(boolean esJugador) {
-        asignartipo(esJugador);
-    }
-    public void aumentarRecurso(int aux){
+    public void aumentarRecurso(int aux) {
         switch (aux) {
-            case 1 -> almacenT++;
-            case 2 -> almacenC++;
-            case 3 -> almacenM++;
+            case 1:
+                if (almacenT < 20) {
+                    almacenT++;
+                } else {
+                    System.out.println("El almacen de trigo esta lleno!");
+                }
+                break;
+            case 2:
+                if (almacenC < 20) {
+                    almacenC++;
+                } else {
+                    System.out.println("El almacen de carbon esta lleno!");
+                }
+                break;
+            case 3:
+                if (almacenM < 20) {
+                    almacenM++;
+                } else {
+                    System.out.println("El almacen de Madera esta lleno!");
+                }
+                break;
         }
     }
-    public void contarMateriales(){
+
+    public void contarMateriales() {
         setRecursos_totales((almacenM + almacenC + almacenT));
     }
+
     public void asignartipo(boolean esJugador) {
         if (esJugador) {
             setType(Type.Persona);
@@ -67,9 +88,13 @@ public class Jugador {
         }
     }
 
-    public String mostrarInfo() {
-        return "Jugador{" +
-                "type=" + type +
-                '}';
+    public void pintarInventario() {
+        System.out.println(mostrarInfo() + " M: " + almacenM + " C " + almacenC + " T " + almacenT);
     }
+
+    public String mostrarInfo() {
+        return String.valueOf(this.type);
+    }
+
+    enum Type {Persona, Maquina}
 }

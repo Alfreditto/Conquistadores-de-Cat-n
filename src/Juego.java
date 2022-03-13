@@ -1,11 +1,13 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Juego {
 
     Scanner sc = new Scanner(System.in);
-    Map<Jugador, Jugador> jugadores = new HashMap<Jugador, Jugador>();
+    Map<Jugador, Jugador> jugadores = new HashMap<>();
 
-    public Juego(){
+    public Juego() {
         System.out.println("Buenas, bienvenido a una nueva partida de Conquistadores de Catán");
         Recurso[][] tablero = new Recurso[3][4];
         Jugador Persona = new Jugador(true);
@@ -16,6 +18,7 @@ public class Juego {
 
         crearTablero(tablero);
         asignarCasillas(tablero, Persona, Maquina);
+        sc.nextLine();
         jugar(tablero, Persona, Maquina);
 
     }
@@ -23,38 +26,53 @@ public class Juego {
     private void jugar(Recurso[][] tablero, Jugador persona, Jugador maquina) {
         int recursosMaquina;
         int recursosJugador;
-        do{
+        do {
             recolectarRecursos(tablero, persona, maquina);
             recursosMaquina = maquina.getRecursos_totales();
             recursosJugador = persona.getRecursos_totales();
-        }while (recursosMaquina < 60 ||  recursosJugador < 60);
+        } while (recursosMaquina < 60 && recursosJugador < 60);
 
         String ganador = recursosMaquina > recursosJugador ? "Ha ganado la maquina" : "Ha ganado el jugador";
         System.out.println(ganador);
     }
 
     private void recolectarRecursos(Recurso[][] tablero, Jugador persona, Jugador maquina) {
-        int dado = (int) (Math.random()*6)+1;
+        System.out.println("Pulsa cualquier tecla");
+        String aux = sc.nextLine();
+        int dado = (int) (Math.random() * 6) + 1;
+        System.out.println("Ha salido " + dado);
         revisarCasilla(tablero, dado, persona, maquina);
     }
 
     private void revisarCasilla(Recurso[][] tablero, int dado, Jugador persona, Jugador maquina) {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
-                if(tablero[i][j].valor == dado) {
-                    switch(tablero[i][j].getTipo()){
-                        case trigo-> jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(1);
-                        case carbon -> jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(2);
-                        case madera-> jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(3);
+                if (tablero[i][j].valor == dado) {
+                    switch (tablero[i][j].getTipo()) {
+                        case trigo -> {
+                            jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(1);
+                            System.out.println("Se le ha dado 1 de trigo a " + tablero[i][j].getDueño().mostrarInfo());
+                        }
+                        case carbon -> {
+                            jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(2);
+                            System.out.println("Se le ha dado 1 de carbon a " + tablero[i][j].getDueño().mostrarInfo());
+                        }
+                        case madera -> {
+                            jugadores.get(tablero[i][j].getDueño()).aumentarRecurso(3);
+                            System.out.println("Se le ha dado 1 de madera a " + tablero[i][j].getDueño().mostrarInfo());
+                        }
+                        default -> System.out.println("No hay ninguna casilla con el numero " + dado);
                     }
                 }
             }
         }
+        persona.pintarInventario();
+        maquina.pintarInventario();
     }
 
     //Vamos a asignar las casillas
     private void asignarCasillas(Recurso[][] tablero, Jugador persona, Jugador maquina) {
-        for (int i = (tablero.length*tablero[0].length); i > 0; i-=2) {
+        for (int i = (tablero.length * tablero[0].length); i > 0; i -= 2) {
             pintarTablero(tablero);
             System.out.println("Quedan " + i + " casillas libres");
             asignarCasillasJ(tablero, persona);
@@ -64,15 +82,15 @@ public class Juego {
 
     //Le vamos asignando mediante un dado las casillas a la Maquina
     private void asignarCasillasM(Recurso[][] tablero, Jugador maquina) {
-            boolean seleccionando = true;
-            do {
-                int fila = (int) (Math.random()* tablero.length);
-                int columna = (int) (Math.random()* tablero[0].length);
-                if (comprobar(tablero, fila, columna)) {
-                    tablero[fila][columna].setDueño(maquina);
-                    seleccionando = !seleccionando;
-                }
-            } while (seleccionando);
+        boolean seleccionando = true;
+        do {
+            int fila = (int) (Math.random() * tablero.length);
+            int columna = (int) (Math.random() * tablero[0].length);
+            if (comprobar(tablero, fila, columna)) {
+                tablero[fila][columna].setDueño(maquina);
+                seleccionando = !seleccionando;
+            }
+        } while (seleccionando);
     }
 
 
@@ -81,11 +99,18 @@ public class Juego {
         String stringFormat = String.format("Indica que casilla quieres, el tablero son %s filas por %s columnas", tablero.length, tablero[0].length);
         System.out.println(stringFormat);
         boolean seleccionando = true;
+        int fila = 0;
+        int columna = 0;
         do {
-            System.out.println("Fila");
-            int fila = sc.nextInt()-1;
-            System.out.println("Columna");
-            int columna = sc.nextInt()-1;
+            do {
+                if (fila > 3 && columna > 4) {
+                    System.out.println("Numero no valido");
+                }
+                System.out.println("Fila");
+                fila = sc.nextInt() - 1;
+                System.out.println("Columna");
+                columna = sc.nextInt() - 1;
+            } while (fila < 3 && columna < 4);
             if (comprobar(tablero, fila, columna)) {
                 tablero[fila][columna].setDueño(persona);
                 seleccionando = !seleccionando;
@@ -98,13 +123,14 @@ public class Juego {
     private boolean comprobar(Recurso[][] tablero, int fila, int columna) {
         return tablero[fila][columna].dueño == null;
     }
-    
+
     //Pintar tablero
     private void pintarTablero(Recurso[][] tablero) {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
                 System.out.println(tablero[i][j].mostrarInfo());
             }
+            System.out.print("\n");
         }
     }
 
@@ -116,5 +142,5 @@ public class Juego {
             }
         }
     }
-    
+
 }
