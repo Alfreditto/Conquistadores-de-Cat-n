@@ -21,7 +21,6 @@ public class Juego {
         sc.nextLine();
         jugar(tablero, Persona, Maquina);
 
-
     }
 
     private void jugar(Recurso[][] tablero, Jugador persona, Jugador maquina) {
@@ -129,7 +128,7 @@ public class Juego {
     private void pintarTablero(Recurso[][] tablero) {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[0].length; j++) {
-                System.out.printf("%-20s", tablero[i][j].mostrarInfo());
+                System.out.println(tablero[i][j].mostrarInfo());
             }
             System.out.print("\n");
         }
